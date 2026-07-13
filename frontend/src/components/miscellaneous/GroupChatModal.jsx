@@ -1,7 +1,6 @@
 import { Box, Button, Dialog, Input, Portal } from "@chakra-ui/react";
 import { useState } from "react";
 import { ChatState } from "../../Context/ChatProvider";
-import { FormControl } from "@chakra-ui/form-control";
 import axios from "axios";
 import { toaster } from "../ui/toaster";
 import UserListItem from "../UserAvatar/UserListItem";
@@ -108,9 +107,7 @@ const GroupChatModal = ({ children }) => {
   };
 
   const handleDelete = (userToDelete) => {
-    console.log("🚀 ~ handleDelete ~ userToDelete:", userToDelete);
     if (selectedUsers.includes(userToDelete)) {
-      console.log("🚀 ~ handleDelete ~ userToDelete:", userToDelete);
       setSelectedUsers(
         selectedUsers.filter((el) => el._id !== userToDelete._id),
       );

@@ -10,14 +10,31 @@ import axios from "axios";
 import { toaster } from "./ui/toaster";
 import ScrollableChat from "./ScrollableChat";
 import "./styles.css";
+import io from "socket.io-client";
+import animationData from "../animation/typing.json";
+import { default as Lottie } from "lottie-react/build/index.es.js";
+
+const ENDPOINT = "http://localhost:8000";
+var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const { user, selectedChat, setSelectedChat } = useContext(ChatContext);
-  console.log("🚀 ~ SingleChat ~ selectedChat:", selectedChat);
+  const [socketConnected, setSocketConnected] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const { user, selectedChat, setSelectedChat, notification, setNotification } =
+    useContext(ChatContext);
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connected", () => setSocketConnected(true));
+    socket.on("typing", () => setIsTyping(true));
+    socket.on("stop typing", () => setIsTyping(false));
+  }, [user]);
 
   const fetchMessages = useCallback(async () => {
     if (!selectedChat?._id || !user?.token) return;
@@ -34,6 +51,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         config,
       );
       setMessages(data || []);
+      socket.emit("join chat", selectedChat._id);
     } catch (error) {
       toaster.create({
         title: error?.message || "Error Occurred!",
@@ -49,15 +67,63 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     const loadMessages = async () => {
       await fetchMessages();
     };
+    selectedChatCompare = selectedChat;
     loadMessages();
-  }, [fetchMessages]);
+  }, [fetchMessages, selectedChat]);
+
+  useEffect(() => {
+    const handleMessageReceived = (newMessageReceived) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageReceived.chat._id
+      ) {
+        if (!notification.includes(newMessageReceived)) {
+          setNotification((prevNotific) => [
+            newMessageReceived,
+            ...prevNotific,
+          ]);
+          setFetchAgain(!fetchAgain);
+        }
+        return;
+      }
+
+      setMessages((prev) => [...prev, newMessageReceived]);
+    };
+
+    socket.on("message received", handleMessageReceived);
+
+    return () => {
+      socket.off("message received", handleMessageReceived);
+    };
+  }, []);
 
   const typeHanding = (e) => {
     setNewMessage(e.target.value);
+
+    if (!socketConnected) return;
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 3000;
+
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiff = timeNow - lastTypingTime;
+
+      if (timeDiff >= timerLength && typing) {
+        socket.emit("stop typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
   };
 
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage.trim()) {
+      socket.emit("stop typing", selectedChat._id);
       const config = {
         headers: {
           "Content-type": "application/json",
@@ -79,6 +145,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         );
 
         setMessages((prevMessages) => [...prevMessages, data]);
+        socket.emit("new message", data);
       } catch (error) {
         toaster.create({
           title: error?.message || "Error Occurred!",
@@ -165,7 +232,21 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               isRequired
               mt={3}
             >
-              {loading && <Spinner size="lg" />}
+              {isTyping && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <Lottie
+                    animationData={animationData}
+                    loop={true}
+                    autoplay={true}
+                    style={{ marginBottom: 7, marginLeft: 0, height: "20px" }}
+                  />
+                </div>
+              )}
               <Input
                 variant="filled"
                 bg="#E0E0E0"

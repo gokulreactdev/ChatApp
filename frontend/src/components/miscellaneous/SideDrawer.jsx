@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -10,8 +10,9 @@ import {
   Portal,
   Input,
   Spinner,
+  Badge,
 } from "@chakra-ui/react";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatContext, ChatState } from "../../Context/ChatProvider";
 import { FiChevronDown } from "react-icons/fi";
 import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router";
@@ -19,6 +20,7 @@ import axios from "axios";
 import { toaster } from "../ui/toaster";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
+import { getSender } from "../../config/ChatLogics";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -29,7 +31,15 @@ const SideDrawer = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navigate = useNavigate();
-  const { user, setSelectedChat, chats, setChats } = ChatState();
+  const {
+    user,
+    setSelectedChat,
+    chats,
+    setChats,
+    notification,
+    setNotification,
+  } = useContext(ChatContext);
+  console.log("🚀 ~ SideDrawer ~ notification:", notification);
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
@@ -80,7 +90,6 @@ const SideDrawer = () => {
       const { data } = await axios.post("/api/chat", { userId }, config);
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
-      console.log("🚀 ~ accessChat ~ data:", data);
 
       setSelectedChat(data);
       setLoadingChat(false);
@@ -129,14 +138,50 @@ const SideDrawer = () => {
         <div>
           <Menu.Root>
             <Menu.Trigger asChild>
-              <Button variant="ghost">
-                <i className="fas fa-bell" />
-              </Button>
+              <Box position="relative" display="inline-block">
+                <Button variant="ghost">
+                  <i className="fas fa-bell" />
+                </Button>
+
+                {notification.length > 0 && (
+                  <Badge
+                    position="absolute"
+                    top="2px"
+                    right="2px"
+                    colorPalette="red"
+                    borderRadius="full"
+                    minW="18px"
+                    h="18px"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    fontSize="10px"
+                    zIndex={1}
+                  >
+                    {notification.length}
+                  </Badge>
+                )}
+              </Box>
             </Menu.Trigger>
 
             <Menu.Positioner>
               <Menu.Content>
-                {/* <Menu.Item value="profile">Profile</Menu.Item> */}
+                {!notification.length && <Menu.Item>No new Messages</Menu.Item>}
+                {notification.map((notific) => (
+                  <Menu.Item
+                    key={notific._id}
+                    onClick={() => {
+                      setSelectedChat(notific.chat);
+                      setNotification(
+                        notification.filter((noti) => noti !== notific),
+                      );
+                    }}
+                  >
+                    {notific?.chat?.isGroupChat
+                      ? `New Message in ${notific.chat.chatName}`
+                      : `New Message in ${getSender(user, notific.chat.users)}`}
+                  </Menu.Item>
+                ))}
               </Menu.Content>
             </Menu.Positioner>
           </Menu.Root>

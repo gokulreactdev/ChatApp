@@ -44,14 +44,13 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       setFetchAgain(!fetchAgain);
     } catch (error) {
       toaster.create({
-        title: "Error Occurred!",
+        title: error?.message || "Error Occurred!",
         description: "Failed to rename the chat",
         closable: true,
         duration: 5000,
         type: "error",
       });
 
-      console.error("Error renaming chat:", error);
       setRenameLoading(false);
     } finally {
       setRenameLoading(false);
@@ -92,13 +91,12 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       fetchMessages();
     } catch (error) {
       toaster.create({
-        title: "Error Occurred!",
+        title: error?.message || "Error Occurred!",
         description: "Failed to remove the user",
         closable: true,
         duration: 5000,
         type: "error",
       });
-      console.error("Error removing user:", error);
       setLoading(false);
     }
   };
@@ -123,13 +121,12 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       setSearchResults(data);
     } catch (error) {
       toaster.create({
-        title: "Error Occurred!",
+        title: error?.message || "Error Occurred!",
         description: "Failed to load the search results",
         closable: true,
         duration: 5000,
         type: "error",
       });
-      console.error("Error searching users:", error);
     } finally {
       setLoading(false);
     }
@@ -175,13 +172,12 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       setLoading(false);
     } catch (error) {
       toaster.create({
-        title: "Error Occurred!",
+        title: error?.message || "Error Occurred!",
         description: "Failed to add the user",
         closable: true,
         duration: 5000,
         type: "error",
       });
-      console.error("Error adding user:", error);
       setLoading(false);
     }
   };
@@ -244,6 +240,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
                     id="search-users"
                     placeholder="Add User to group"
                     mb={3}
+                    value={search}
                     onChange={(e) => handleSearch(e.target.value)}
                   />
                 </FormControl>

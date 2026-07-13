@@ -4,7 +4,6 @@ const Chat = require("../Models/chatModel");
 
 const accessChat = asyncHandler(async (req, res) => {
   const { userId } = req.body;
-  console.log("🚀 ~ userId:", userId);
 
   if (!userId) {
     return res.sendStatus(400);

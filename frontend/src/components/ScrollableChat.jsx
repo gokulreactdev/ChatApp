@@ -13,9 +13,9 @@ const ScrollableChat = ({ messages, user }) => {
       {messages &&
         messages.map((m, i) => {
           return (
-            <div style={{ display: "flex" }} key={m._id}>
+            <div style={{ display: "flex" }} key={m._id + i}>
               {(isSameSender(messages, m, i, user._id) ||
-                isLastMessage(messages, m, i, user._id)) && (
+                isLastMessage(messages, i, user._id)) && (
                 <Tooltip.Root positioning={{ placement: "bottom-start" }}>
                   <Tooltip.Trigger asChild>
                     <Avatar.Root size="sm" mr={1} mt={1} cursor="pointer">

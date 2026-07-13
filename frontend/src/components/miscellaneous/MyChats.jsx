@@ -36,17 +36,11 @@ const MyChats = ({ fetchAgain }) => {
           duration: 5000,
           type: "warning",
         });
-        console.error("Error fetching chats:", error);
       }
     };
 
     fetchChats();
   }, [setChats, user.token, fetchAgain]);
-
-  const handleNewGroupChat = () => {
-    // Logic to handle creating a new group chat
-    console.log("New Group Chat button clicked");
-  };
 
   return (
     <Box
@@ -76,7 +70,6 @@ const MyChats = ({ fetchAgain }) => {
             display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             variant="subtle"
-            onClick={handleNewGroupChat}
           >
             New Group Chat
             <FiPlus />
