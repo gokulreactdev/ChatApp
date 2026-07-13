@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { ChatState } from "../../Context/ChatProvider";
+import { useContext, useEffect } from "react";
+import { ChatContext,  } from "../../Context/ChatProvider";
 import axios from "axios";
 import { toaster } from "../ui/toaster";
 import { Box, Button, Stack, Text } from "@chakra-ui/react";
@@ -9,7 +9,8 @@ import { getSender } from "../../config/ChatLogics";
 import GroupChatModal from "./GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {
-  const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
+  const { user, selectedChat, setSelectedChat, chats, setChats } =
+    useContext(ChatContext);
 
   useEffect(() => {
     const fetchChats = async () => {

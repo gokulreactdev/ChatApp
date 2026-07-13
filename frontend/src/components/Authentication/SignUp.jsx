@@ -8,9 +8,9 @@ import {
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { toaster } from "../ui/toaster";
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatContext } from "../../Context/ChatProvider";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -20,7 +20,7 @@ const SignUp = () => {
   const [pic, setPic] = useState(null);
   const [show, setShow] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setUser } = ChatState();
+  const { setUser } = useContext(ChatContext);
   const navigate = useNavigate();
 
   const onSubmitHandler = async () => {

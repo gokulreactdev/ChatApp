@@ -6,11 +6,11 @@ import {
   Button,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { toaster } from "../ui/toaster";
 import axios from "axios";
-import { ChatState } from "../../Context/ChatProvider";
+import { ChatContext } from "../../Context/ChatProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,7 +19,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { setUser } = ChatState();
+  const { setUser } = useContext(ChatContext);
 
   const onSubmitHandler = async () => {
     setLoading(true);

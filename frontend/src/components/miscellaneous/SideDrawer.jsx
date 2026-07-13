@@ -12,7 +12,7 @@ import {
   Spinner,
   Badge,
 } from "@chakra-ui/react";
-import { ChatContext, ChatState } from "../../Context/ChatProvider";
+import { ChatContext } from "../../Context/ChatProvider";
 import { FiChevronDown } from "react-icons/fi";
 import ProfileModal from "./ProfileModal";
 import { useNavigate } from "react-router";

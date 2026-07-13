@@ -1,6 +1,6 @@
 import { Box, Button, Dialog, Input, Portal } from "@chakra-ui/react";
-import { useState } from "react";
-import { ChatState } from "../../Context/ChatProvider";
+import { useContext, useState } from "react";
+import { ChatContext } from "../../Context/ChatProvider";
 import axios from "axios";
 import { toaster } from "../ui/toaster";
 import UserListItem from "../UserAvatar/UserListItem";
@@ -14,7 +14,7 @@ const GroupChatModal = ({ children }) => {
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const { user, chats, setChats } = ChatState();
+  const { user, chats, setChats } = useContext(ChatContext);
 
   const handleSearch = async (query) => {
     setSearchTerm(query);
