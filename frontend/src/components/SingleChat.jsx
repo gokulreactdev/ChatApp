@@ -14,7 +14,7 @@ import io from "socket.io-client";
 import animationData from "../animation/typing.json";
 import { default as Lottie } from "lottie-react/build/index.es.js";
 
-const ENDPOINT = "http://localhost:8000";
+const ENDPOINT = "https://chatapp-kkj7.onrender.com/";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
