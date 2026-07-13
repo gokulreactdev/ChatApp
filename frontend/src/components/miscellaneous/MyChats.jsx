@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ChatState } from "../../Context/ChatProvider";
 import axios from "axios";
 import { toaster } from "../ui/toaster";
@@ -9,18 +9,12 @@ import { getSender } from "../../config/ChatLogics";
 import GroupChatModal from "./GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {
-  const [loggedUser, setLoggedUser] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem("userInfo"));
-    } catch {
-      return null;
-    }
-  });
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
 
   useEffect(() => {
     const fetchChats = async () => {
       try {
+        if (!user) return;
         const config = {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -40,7 +34,7 @@ const MyChats = ({ fetchAgain }) => {
     };
 
     fetchChats();
-  }, [setChats, user.token, fetchAgain]);
+  }, [setChats, user, fetchAgain]);
 
   return (
     <Box
@@ -105,7 +99,7 @@ const MyChats = ({ fetchAgain }) => {
                   <Text>
                     {chat.isGroupChat
                       ? chat.chatName
-                      : getSender(loggedUser, chat.users)}
+                      : getSender(user, chat.users)}
                   </Text>
                 </Box>
               );
