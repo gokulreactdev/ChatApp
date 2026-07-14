@@ -21,7 +21,7 @@ const HomePage = () => {
           color="black"
           textAlign="center"
         >
-          Talk-A-Tive
+          ChatSphere
         </Text>
       </Box>
       <Box
