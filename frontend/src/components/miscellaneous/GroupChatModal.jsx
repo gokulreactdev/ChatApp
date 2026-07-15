@@ -125,14 +125,16 @@ const GroupChatModal = ({ children }) => {
           <Dialog.Backdrop />
 
           <Dialog.Positioner>
-            <Dialog.Content>
+            <Dialog.Content bg="white" borderRadius="2xl" boxShadow="xl">
               <Dialog.Header
                 fontSize="35px"
                 fontFamily="Work sans"
                 display="flex"
                 justifyContent="center"
+                bg="gray.50"
+                borderBottomWidth="1px"
               >
-                <Dialog.Title>Create Group Chat</Dialog.Title>
+                <Dialog.Title fontWeight="700">Create Group Chat</Dialog.Title>
                 <Dialog.CloseTrigger />
               </Dialog.Header>
 
@@ -183,7 +185,11 @@ const GroupChatModal = ({ children }) => {
               </Dialog.Body>
 
               <Dialog.Footer>
-                <Button colorScheme={"blue"} onClick={handleSumbmit}>
+                <Button
+                  bgGradient="linear-gradient(135deg, #4f46e5, #2563eb)"
+                  color="white"
+                  onClick={handleSumbmit}
+                >
                   Create Chat
                 </Button>
               </Dialog.Footer>

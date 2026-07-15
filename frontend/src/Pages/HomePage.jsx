@@ -6,37 +6,41 @@ const HomePage = () => {
   return (
     <Container maxW="xl" centerContent>
       <Box
-        d="flex"
-        justifyContent="center"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
         p={3}
-        bg="white"
+        bg="whiteAlpha.900"
         w="100%"
         m="40px 0 15px 0"
-        borderRadius="1g"
+        borderRadius="2xl"
         borderWidth="1px"
+        borderColor="gray.200"
+        boxShadow="xl"
       >
         <Text
           fontSize="4xl"
           fontFamily="Work sans"
-          color="black"
+          fontWeight="700"
+          color="blue.700"
           textAlign="center"
         >
-          ChatSphere
+          PulseChat
         </Text>
       </Box>
       <Box
-        bg="gray.100"
+        bg="whiteAlpha.900"
         w="100%"
         p={4}
-        borderRadius="md"
+        borderRadius="2xl"
         borderWidth="1px"
-        borderRadius="1g"
-        color="black"
+        borderColor="gray.200"
+        boxShadow="md"
       >
         <Tabs.Root
           variant="plain"
           css={{
-            "--tabs-indicator-bg": "red",
+            "--tabs-indicator-bg": "#4f46e5",
             "--tabs-indicator-shadow": "shadows.xs",
             "--tabs-trigger-radius": "radii.full",
           }}
@@ -52,7 +56,10 @@ const HomePage = () => {
               justifyContent="center"
               alignItems="center"
               width={"50%"}
-              _selected={{ background: "#3182CE" }}
+              _selected={{
+                background: "linear-gradient(135deg, #4f46e5, #2563eb)",
+                color: "white",
+              }}
               value="Login"
             >
               Login
@@ -61,7 +68,10 @@ const HomePage = () => {
               justifyContent="center"
               alignItems="center"
               width={"50%"}
-              _selected={{ background: "#3182CE" }}
+              _selected={{
+                background: "linear-gradient(135deg, #4f46e5, #2563eb)",
+                color: "white",
+              }}
               value="Sign Up"
             >
               Sign Up

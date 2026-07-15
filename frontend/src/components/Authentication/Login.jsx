@@ -119,7 +119,8 @@ const Login = () => {
       </FormControl>
 
       <Button
-        backgroundColor="blue.500"
+        bgGradient="linear-gradient(135deg, #4f46e5, #2563eb)"
+        color="white"
         width="100%"
         style={{ marginTop: 15 }}
         onClick={onSubmitHandler}
@@ -128,7 +129,8 @@ const Login = () => {
         Login
       </Button>
       <Button
-        backgroundColor="red.500"
+        bgGradient="linear-gradient(135deg, #8b5cf6, #ec4899)"
+        color="white"
         width="100%"
         style={{ marginTop: 15 }}
         onClick={() => {

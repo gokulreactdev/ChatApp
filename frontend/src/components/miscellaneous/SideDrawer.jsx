@@ -111,14 +111,21 @@ const SideDrawer = () => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="white"
+        bg="whiteAlpha.900"
         w="100%"
         p="5px 10px 5px 10px"
-        borderWidth="5px"
+        borderWidth="1px"
+        borderColor="gray.200"
+        boxShadow="sm"
       >
         <Tooltip.Root>
           <Tooltip.Trigger asChild>
-            <Button variant="ghost" onClick={() => setDrawerOpen(true)}>
+            <Button
+              variant="ghost"
+              borderRadius="full"
+              bg="gray.50"
+              onClick={() => setDrawerOpen(true)}
+            >
               <i className="fas fa-search" />
               <Text display={{ base: "none", md: "flex" }} px={"4"}>
                 Search
@@ -131,15 +138,20 @@ const SideDrawer = () => {
           </Tooltip.Positioner>
         </Tooltip.Root>
 
-        <Text fontSize="2xl" fontFamily="Work sans">
-          ChatSphere
+        <Text
+          fontSize="2xl"
+          fontFamily="Work sans"
+          fontWeight="700"
+          color="blue.700"
+        >
+          PulseChat
         </Text>
 
         <div>
           <Menu.Root>
             <Menu.Trigger asChild>
               <Box position="relative" display="inline-block">
-                <Button variant="ghost">
+                <Button variant="ghost" borderRadius="full" bg="gray.50">
                   <i className="fas fa-bell" />
                 </Button>
 
@@ -188,7 +200,7 @@ const SideDrawer = () => {
 
           <Menu.Root>
             <Menu.Trigger asChild>
-              <Button variant="ghost">
+              <Button variant="ghost" borderRadius="full" bg="gray.50">
                 <Avatar.Root size="sm">
                   <Avatar.Fallback name={user.name} />
                   <Avatar.Image src={user.pic || null} alt={user.name} />
@@ -227,19 +239,25 @@ const SideDrawer = () => {
                 borderBottomWidth="1px"
                 display="flex"
                 alignItems="center"
+                bg="gray.50"
               >
-                <Drawer.Title>Search Users</Drawer.Title>
+                <Drawer.Title fontWeight="700">Search Users</Drawer.Title>
               </Drawer.Header>
 
               <Drawer.Body>
-                <Box display="flex" pb={2}>
+                <Box display="flex" pb={2} gap={2}>
                   <Input
                     placeholder="Search by name or email"
-                    mr={2}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                   />
-                  <Button onClick={() => handleSearch()}>Go</Button>
+                  <Button
+                    bgGradient="linear-gradient(135deg, #4f46e5, #2563eb)"
+                    color="white"
+                    onClick={() => handleSearch()}
+                  >
+                    Go
+                  </Button>
                 </Box>
                 {loading ? (
                   <ChatLoading />
@@ -256,7 +274,9 @@ const SideDrawer = () => {
               </Drawer.Body>
 
               <Drawer.Footer>
-                <Button onClick={() => setDrawerOpen(false)}>Close</Button>
+                <Button variant="outline" onClick={() => setDrawerOpen(false)}>
+                  Close
+                </Button>
               </Drawer.Footer>
             </Drawer.Content>
           </Drawer.Positioner>

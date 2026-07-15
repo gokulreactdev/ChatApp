@@ -207,7 +207,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             flexDir="column"
             justifyContent="flex-end"
             p={3}
-            bg="#E8E8E8"
+            bg="linear-gradient(135deg, #f8fbff 0%, #eef4ff 100%)"
             w="100%"
             h="100%"
             borderRadius="lg"
@@ -249,7 +249,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               )}
               <Input
                 variant="filled"
-                bg="#E0E0E0"
+                bg="white"
+                borderWidth="1px"
+                borderColor="gray.200"
                 placeholder="Enter a message..."
                 value={newMessage}
                 onChange={typeHanding}

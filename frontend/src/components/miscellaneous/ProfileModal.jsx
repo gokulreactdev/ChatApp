@@ -22,9 +22,18 @@ const ProfileModal = ({ user, open, setOpen, isIconButton = false }) => {
           <Dialog.Backdrop />
 
           <Dialog.Positioner>
-            <Dialog.Content>
-              <Dialog.Header display="flex" justifyContent="center">
-                <Dialog.Title fontsize="40px" fontFamily={"Work sans"}>
+            <Dialog.Content bg="white" borderRadius="2xl" boxShadow="xl">
+              <Dialog.Header
+                display="flex"
+                justifyContent="center"
+                bg="gray.50"
+                borderBottomWidth="1px"
+              >
+                <Dialog.Title
+                  fontSize="24px"
+                  fontFamily={"Work sans"}
+                  fontWeight="700"
+                >
                   {user.name}
                 </Dialog.Title>
               </Dialog.Header>
@@ -41,7 +50,9 @@ const ProfileModal = ({ user, open, setOpen, isIconButton = false }) => {
                   alt={user.name}
                   borderRadius="full"
                   boxSize="150px"
-                  //   objectFit="cover"
+                  borderWidth="4px"
+                  borderColor="blue.100"
+                  objectFit="cover"
                 />
                 <Dialog.Description
                   fontSize={{ base: "15px", md: "20px" }}
@@ -52,7 +63,7 @@ const ProfileModal = ({ user, open, setOpen, isIconButton = false }) => {
               </Dialog.Body>
 
               <Dialog.Footer>
-                <Button variant={"ghost"} onClick={() => setOpen(false)}>
+                <Button variant={"outline"} onClick={() => setOpen(false)}>
                   Close
                 </Button>
               </Dialog.Footer>

@@ -6,10 +6,10 @@ const UserListItem = ({ user, handleFunction }) => {
     <Box
       onClick={handleFunction}
       cursor="pointer"
-      bg="#d4caca"
+      bg="white"
       _hover={{
-        background: "#38B2AC",
-        color: "white",
+        background: "linear-gradient(135deg, #eef4ff, #e0e7ff)",
+        color: "#1e293b",
       }}
       w="100%"
       alignItems="center"
@@ -17,9 +17,12 @@ const UserListItem = ({ user, handleFunction }) => {
       flexDirection="row"
       color="black"
       px={3}
-      py={2}
-      mb={2}
-      borderRadius="lg"
+      py={3}
+      mb={3}
+      borderRadius="2xl"
+      borderWidth="1px"
+      borderColor="gray.200"
+      boxShadow="sm"
     >
       <Avatar.Root size="sm" mr={2} cursor="pointer">
         <Avatar.Fallback name={user.name} />

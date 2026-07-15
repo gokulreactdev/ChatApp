@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { ChatContext,  } from "../../Context/ChatProvider";
+import { ChatContext } from "../../Context/ChatProvider";
 import axios from "axios";
 import { toaster } from "../ui/toaster";
 import { Box, Button, Stack, Text } from "@chakra-ui/react";
@@ -43,10 +43,12 @@ const MyChats = ({ fetchAgain }) => {
       flexDir="column"
       alignItems="center"
       p={3}
-      bg="white"
+      bg="whiteAlpha.900"
       width={{ base: "100%", md: "31%" }}
-      borderRadius="lg"
+      borderRadius="2xl"
       borderWidth="1px"
+      borderColor="gray.200"
+      boxShadow="md"
     >
       <Box
         pb={3}
@@ -59,12 +61,17 @@ const MyChats = ({ fetchAgain }) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        My Chats
+        <Text fontWeight="700" color="blue.700">
+          My Chats
+        </Text>
         <GroupChatModal>
           <Button
             display="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             variant="subtle"
+            borderRadius="full"
+            bg="blue.50"
+            color="blue.700"
           >
             New Group Chat
             <FiPlus />
@@ -76,7 +83,7 @@ const MyChats = ({ fetchAgain }) => {
         display="flex"
         flexDir="column"
         p={3}
-        bg="#F8F8F8"
+        bg="gray.50"
         width="100%"
         height="100%"
         borderRadius="lg"
@@ -90,8 +97,14 @@ const MyChats = ({ fetchAgain }) => {
                   key={chat._id}
                   onClick={() => setSelectedChat(chat)}
                   cursor="pointer"
-                  bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                  color={selectedChat === chat ? "white" : "black"}
+                  bg={
+                    selectedChat === chat
+                      ? "linear-gradient(135deg, #4f46e5, #2563eb)"
+                      : "white"
+                  }
+                  color={selectedChat === chat ? "white" : "gray.700"}
+                  borderWidth="1px"
+                  borderColor="gray.200"
                   px={3}
                   py={2}
                   borderRadius="lg"
